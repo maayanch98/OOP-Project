@@ -1,20 +1,32 @@
 package id311148720_id207324547;
 
-public class BallotBox1 {
+public abstract class BallotBox1 {
 
-	private static Function F = new Function(); // to checking
-	protected static int counterseviralNum = 1000;
-	protected int sizeOfList = 100;
-	private static int priesentsizeOfList = 0;
-	protected int seviraNum;
-	protected Address address;
+	protected static Function F = new Function(); // to checking
+	protected static int counterSerialNum = 1000;
 	protected Citizen[] listOfCitizen;
-	private final static int presentYear = 2021;
+	protected int sizeOfListCitizen = 100;
+	protected Party[] listOfparty;
+	protected int sizeOfListParty = 100;
+	protected int priesentCitizenInTheList = 0; // its for counter the Citizen
+	protected Address address;
+	protected int SerialNum;
+	protected final static int presentYear = 2021;
+	protected static int mayVote = 18;
 
-	public BallotBox1(Address address, Citizen[] listOfCiziten) throws Exception {
-		this.seviraNum = counterseviralNum++;
+	public BallotBox1(Address address) throws Exception {
 		setAddress(address);
-		setListOfCitizen(listOfCiziten);
+		SerialNum = counterSerialNum++;
+		listOfCitizen = new Citizen[sizeOfListCitizen];
+		listOfparty = new Party[sizeOfListParty];
+
+	}
+
+	public BallotBox1(BallotBox1 copy) throws Exception {
+		setAddress(new Address(copy.address));
+		SerialNum = copy.SerialNum;
+		listOfCitizen = F.CopyArrayCitizen(copy.listOfCitizen);
+		listOfparty = F.CopyArrayParty(copy.getParty());
 
 	}
 
@@ -26,37 +38,45 @@ public class BallotBox1 {
 		this.address = address;
 	}
 
+	public void setParty(Party[] nameparty) {
+
+		listOfparty = F.CopyArrayParty(nameparty);
+
+	}
+
+	public Party[] getParty() {
+
+		return listOfparty;
+	}
+
+	public void AddVoteToParty(int partyname) {
+
+		listOfparty[partyname - 1].AddVotes();
+
+	}
+
+	public String getVote(int partyname) {
+
+		return listOfparty[partyname - 1].getName();
+
+	}
+
 	public Citizen[] getListOfCiziten() {
 		return listOfCitizen;
 	}
 
-	public void setListOfCitizen(Citizen[] newlistOfCitizen) throws Exception, ArrayIndexOutOfBoundsException {
-
-		F.CheckingAge(newlistOfCitizen);
-		this.listOfCitizen = new Citizen[sizeOfList];
-		for (int i = 0; i < newlistOfCitizen.length; i++) {
-
-			if (!(newlistOfCitizen[i].getCoronaInsulation() == true)) {
-
-				throw new Exception("we found CoronaInsulation ");
-			}
-			
-
-			this.listOfCitizen[i] = newlistOfCitizen[i];
-			this.listOfCitizen[i].setBallotBox(this);
-			priesentsizeOfList++;
-
-		}
-
-	}
+	abstract public boolean AddCitizen(Citizen newcitizen);
 
 	public boolean equals(Object newobject) {
 
 		if (!(newobject instanceof BallotBox1)) {
 			return false;
+
 		}
-		BallotBox1 temp = (BallotBox1) newobject;
+
 		boolean checking = true;
+		BallotBox1 temp = (BallotBox1) newobject;
+
 		for (int i = 0; i < listOfCitizen.length; i++) {
 
 			if (!(listOfCitizen[i].equals(temp.getListOfCiziten()[i]))) {
@@ -71,16 +91,16 @@ public class BallotBox1 {
 
 	public String toString() {
 
-		
 		StringBuffer B = new StringBuffer(address.toString());
-		
-		
-		for (int i = 0; i < priesentsizeOfList; i++) {
-			
-		B.append(listOfCitizen[i].toString()+"\n");
+		B.append("The several number of BallotBox: " + SerialNum + "\n\n");
+
+		for (int i = 0; i < priesentCitizenInTheList; i++) {
+
+			B.append(listOfCitizen[i].toString() + "\n");
 
 		}
-		
+
 		return B.toString();
 	}
+
 }

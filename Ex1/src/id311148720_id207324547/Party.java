@@ -4,18 +4,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Party {
-	
-	
+
 	public final static int numOfCandidates = 120;
 	private int numOfActualCandidates = 0;
 	private String name;
-	private Citizen[] Candidates;
+	private Candidate [] Candidates;
 	private StreamType stream;
 	String DateCreatedParty;
-	private int votes=0;
-	private final int presentYear=2021;
-
-	
+	private final int presentYear = 2021;
+	private int totalVotes = 0;
 
 	public enum StreamType {
 		CENTRAL, LEFT, RIGHT,
@@ -25,7 +22,16 @@ public class Party {
 		setName(name);
 		setStream(stream);
 		setNormalDate();
-		Candidates = new Citizen[numOfCandidates];
+		Candidates = new Candidate [numOfCandidates];
+	}
+
+	public Party(Party copy) {
+
+		setName(copy.name);
+		setStream(copy.stream);
+		this.DateCreatedParty = copy.DateCreatedParty;
+		Candidates = new Candidate [numOfCandidates];
+
 	}
 
 	public int getNumOfActualCandidates() {
@@ -51,24 +57,18 @@ public class Party {
 	public void setStream(StreamType stream) {
 		this.stream = stream;
 	}
-	public int getVotes() {
-		return votes;
+
+	public int getTotalVotes() {
+		return totalVotes;
 	}
 
 	public void AddVotes() {
-		votes++;
+		totalVotes++;
 	}
 
-	public boolean AddCandidates(Citizen newcandidates ,int placeInPrimaries) {
+	public void AddCandidates(Candidate  newcandidates) {
 
-		if (presentYear - newcandidates.getYearOfBirth() < 18) {
-			return false;
-		}
-			Candidates [numOfActualCandidates++]=newcandidates;
-			
-			return true;
-		
-		
+		Candidates[numOfActualCandidates++] = newcandidates;
 
 	}
 

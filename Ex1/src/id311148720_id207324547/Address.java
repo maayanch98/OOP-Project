@@ -11,11 +11,14 @@ public class Address {
 		this.setName(name);
 		this.setNum(num);
 	}
-
-	public Address(Address other) {
-
-		this(other.city, other.name, other.num);
+	
+	public  Address (Address copy) {
+		
+		 this(copy.city , copy.name , copy.num);
+		
 	}
+
+	
 
 	public int getNum() {
 		return num;
@@ -54,7 +57,7 @@ public class Address {
 	public String toString() {
 
 		return "Address ditialis! " + "\n" + "The city is; " + city + "\n" + "The address name is :" + name + "\n"
-				+ "The address number is ;" + num + "\n\n" ;
+				+ "The address number is ;" + num + "\n" ;
 	}
 
 }

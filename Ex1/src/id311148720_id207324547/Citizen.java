@@ -1,21 +1,28 @@
 package id311148720_id207324547;
 
-public class Citizen {
+public abstract class Citizen {
 
-	private String name;
-	private int yearOfBirth;
-	private String idNum;
-	private BallotBox1 ballotBox;
-	private boolean coronaInsulation;
-	private final static int presentYear = 2021;
+	protected final static int presentYear = 2021;
+	protected Function F = new Function();
+	protected boolean coronaInsulation;
+	protected BallotBox1 ballotBox;
+	protected int yearOfBirth;
+	protected String name;
+	protected String idNum;
 
 	public Citizen(String name, int yearOfBirth, String idNum, boolean coronaIsulatins) throws Exception {
-
+		ballotBox = null;// to be able to use method
 		setName(name);
-		setYearOfBirth(yearOfBirth);
-		setIdNum(idNum);
-		ballotBox = null;
-this.coronaInsulation=coronaIsulatins;
+		setIdNum(idNum);// throws Exception
+		setYearOfBirth(yearOfBirth);// throws Exception
+		this.coronaInsulation = coronaIsulatins;
+
+	}
+
+	public Citizen(Citizen copy) throws Exception {
+
+		this(copy.name, copy.yearOfBirth, copy.idNum, copy.coronaInsulation);
+
 	}
 
 	public void setName(String name) {
@@ -28,9 +35,7 @@ this.coronaInsulation=coronaIsulatins;
 		return name;
 	}
 
-	private void setYearOfBirth(int newYearOfBirth) {
-		this.yearOfBirth = newYearOfBirth;
-	}
+	abstract void setYearOfBirth(int YearOfBirth) throws Exception;
 
 	public int getYearOfBirth() {
 		return yearOfBirth;
@@ -63,20 +68,21 @@ this.coronaInsulation=coronaIsulatins;
 	public boolean setBallotBox(BallotBox1 newballotBox) {
 
 		if (newballotBox instanceof CoronaBalltBox) {
-			
+
 			if (coronaInsulation == true) {
-				if (presentYear - yearOfBirth > 18) {
-					
+				if (presentYear - yearOfBirth >= 18) {
+
 					this.ballotBox = newballotBox;
-					
+
 					return true;
-					
-					
+
 				}
 				return false;
 			}
 
-		} else if (newballotBox instanceof SoldiredBalltBox) {
+		}
+
+		if (newballotBox instanceof SoldiredBalltBox) {
 
 			if (presentYear - yearOfBirth >= 18 && presentYear - yearOfBirth <= 21) {
 
@@ -89,6 +95,21 @@ this.coronaInsulation=coronaIsulatins;
 			}
 
 		}
+
+		if (newballotBox instanceof RegularBalltBox) {
+
+			if (presentYear - yearOfBirth >= 18) {
+
+				if (coronaInsulation == false) {
+					this.ballotBox = newballotBox;
+					return true;
+
+				}
+				return false;
+			}
+
+		}
+
 		return false;
 	}
 
@@ -97,30 +118,29 @@ this.coronaInsulation=coronaIsulatins;
 		if (!(obj instanceof Citizen)) {
 			return false;
 		}
-		Citizen temp = (Citizen) obj;
 
+		Citizen temp = (Citizen) obj;
 		return name.equals(temp.getName()) && yearOfBirth == temp.yearOfBirth && idNum.equals(temp.getIdNum());
 	}
 
 	public String toString() {
 
 		return "The name is: " + name + "\n" + "The year of birth is: " + yearOfBirth + "\n" + "The id number is: "
-				+ idNum + "\n" + "The ballot box to which it is associated: " + ballotBox.getClass().getSimpleName() + "\n"
-				+ "Is it in isolation? " + coronaInsulation + "\n";
+				+ idNum + "\n" + "The ballot box to which it is associated: " + ballotBox.getClass().getSimpleName()
+				+ "\n" + "Is it in isolation? " + coronaInsulation + "\n";
 
 	}
 
-	public void CheckId(String id) throws Exception { // Private Function for SetID
+	private void CheckId(String id) throws Exception { // Method for  this class
 
 		boolean temp = true;
 
 		if (id.length() != 9) {
-
 			throw new Exception("Erorr: Please enter 9 digits");
 
 		}
 
-		try {
+		try { 						//  Because the command are throws Exception (Integer.parseInt(id))
 			Integer.parseInt(id);
 
 		}

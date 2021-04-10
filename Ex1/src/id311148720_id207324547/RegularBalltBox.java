@@ -1,8 +1,8 @@
 package id311148720_id207324547;
 
-public class SoldiredBalltBox extends BallotBox1 {
+public class RegularBalltBox extends BallotBox1 {
 
-	public SoldiredBalltBox(Address address) throws Exception {
+	public RegularBalltBox(Address address) throws Exception {
 		super(address);
 
 	}
@@ -11,7 +11,7 @@ public class SoldiredBalltBox extends BallotBox1 {
 	public boolean AddCitizen(Citizen newcitizen) {
 
 		if (!(newcitizen.getCoronaInsulation() == false) && (presentYear - newcitizen.getYearOfBirth() >= mayVote)
-				&& (newcitizen instanceof Soldier)) {
+				&& !(newcitizen instanceof Soldier)) {
 
 			listOfCitizen[priesentCitizenInTheList++] = newcitizen;
 
@@ -19,5 +19,4 @@ public class SoldiredBalltBox extends BallotBox1 {
 		}
 		return false;
 	}
-
 }
