@@ -246,7 +246,7 @@ public class ElectuonMain {
 			}
 
 			case (3): {
-				String nameOfParty;
+				String nameOfParty,streamType=null;
 				StreamType stream;
 				System.out.println("please enter name of party");
 				nameOfParty = s.nextLine();
@@ -254,7 +254,17 @@ public class ElectuonMain {
 				System.out.println(StreamType.CENTRAL);
 				System.out.println(StreamType.LEFT);
 				System.out.println(StreamType.RIGHT);
-				stream=StreamType.valueOf(s.nextLine());
+				streamType=s.nextLine();
+				while(streamType.isEmpty()||(!streamType.equals("CENTRAL")&&!streamType.equals("LEFT")&&!streamType.equals("RIGHT"))) {
+					System.out.println("the stream is not legal pleas enter again");
+					System.out.println("please enter stream of party:");
+					System.out.println(StreamType.CENTRAL);
+					System.out.println(StreamType.LEFT);
+					System.out.println(StreamType.RIGHT);
+					streamType=s.nextLine();
+				}
+				stream=StreamType.valueOf(streamType);
+				party(nameOfParty,stream);
 				// month = Month.MARCH;
 				checkingOption = false;
 				break;
